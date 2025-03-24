@@ -111,7 +111,7 @@ HF_REPO_ID = "yifengzhu-hf/LIBERO-datasets"
 def download_from_huggingface(dataset_name, download_dir, check_overwrite=True):
     """
     Download a specific LIBERO dataset from Hugging Face.
-    
+
     Args:
         dataset_name (str): Name of the dataset to download (e.g., 'libero_spatial')
         download_dir (str): Directory where the dataset should be downloaded
@@ -121,10 +121,10 @@ def download_from_huggingface(dataset_name, download_dir, check_overwrite=True):
         raise ImportError(
             "Hugging Face Hub is not available. Install it with 'pip install huggingface_hub'"
         )
-    
+
     # Create the destination folder
     os.makedirs(download_dir, exist_ok=True)
-    
+
     # Check if dataset already exists
     dataset_dir = os.path.join(download_dir, dataset_name)
     if check_overwrite and os.path.exists(dataset_dir):
@@ -134,11 +134,11 @@ def download_from_huggingface(dataset_name, download_dir, check_overwrite=True):
         if user_response.lower() not in {"yes", "y"}:
             print(f"Skipping download of {dataset_name}")
             return
-        
+
         # Remove existing directory
         print(f"Removing existing folder: {dataset_dir}")
         shutil.rmtree(dataset_dir)
-    
+
     # Download the dataset
     print(f"Downloading {dataset_name} from Hugging Face...")
     folder_path = snapshot_download(
@@ -149,7 +149,7 @@ def download_from_huggingface(dataset_name, download_dir, check_overwrite=True):
         local_dir_use_symlinks=False,  # Prevents using symlinks to cached files
         force_download=True  # Forces re-downloading files
     )
-    
+
     # Verify downloaded files
     file_count = sum([len(files) for _, _, files in os.walk(os.path.join(download_dir, dataset_name))])
     print(f"Downloaded {file_count} files for {dataset_name}")
@@ -186,7 +186,7 @@ def libero_dataset_download(datasets="all", download_dir=None, check_overwrite=T
 
     for dataset_name in datasets_to_download:
         print(f"Downloading {dataset_name}")
-        
+
         if use_huggingface:
             download_from_huggingface(
                 dataset_name=dataset_name,
